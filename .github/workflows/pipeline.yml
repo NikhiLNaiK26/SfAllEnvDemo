@@ -59,9 +59,9 @@ jobs:
       - name: Validate Deployment
         run: |
             sf project deploy validate \
-            --source-dir force-app \
-             --target-org targetOrg \
-             --wait 30
+            --target-org targetOrg \
+            --manifest manifest/package.xml \
+            --wait 30
 
       #####################################################
       # DEPLOYMENT
@@ -70,6 +70,6 @@ jobs:
       - name: Deploy to Target Org
         run: |
             sf project deploy start \
-            --source-dir force-app \
             --target-org targetOrg \
+            --manifest manifest/package.xml \
             --wait 30
