@@ -58,9 +58,10 @@ jobs:
 
       - name: Validate Deployment
         run: |
-          sf project deploy validate \
-            --target-org targetOrg \
-            --wait 30
+            sf project deploy validate \
+            --source-dir force-app \
+             --target-org targetOrg \
+             --wait 30
 
       #####################################################
       # DEPLOYMENT
@@ -68,6 +69,7 @@ jobs:
 
       - name: Deploy to Target Org
         run: |
-          sf project deploy start \
+            sf project deploy start \
+            --source-dir force-app \
             --target-org targetOrg \
             --wait 30
