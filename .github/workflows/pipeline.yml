@@ -16,6 +16,19 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v4
 
+      - name: Debug Repository Structure
+        run: |
+          echo "Current Directory"
+          pwd
+
+          echo ""
+          echo "Root Files"
+          ls -la
+
+          echo ""
+          echo "Project Structure"
+          find . -maxdepth 3 -type d
+
       - name: Install Salesforce CLI
         run: |
           npm install @salesforce/cli --global
@@ -58,7 +71,7 @@ jobs:
 
       - name: Validate Deployment
         run: |
-            sf project deploy validate \
+          sf project deploy validate \
             --target-org targetOrg \
             --manifest manifest/package.xml \
             --wait 30
@@ -69,7 +82,7 @@ jobs:
 
       - name: Deploy to Target Org
         run: |
-            sf project deploy start \
+          sf project deploy start \
             --target-org targetOrg \
             --manifest manifest/package.xml \
             --wait 30
