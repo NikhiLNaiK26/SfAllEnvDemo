@@ -1,0 +1,88 @@
+name: Salesforce Validate and Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - NikhilDev
+      - NikhilQAT
+      - NikhilUAT
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Debug Repository Structure
+        run: |
+          echo "Current Directory"
+          pwd
+
+          echo ""
+          echo "Root Files"
+          ls -la
+
+          echo ""
+          echo "Project Structure"
+          find . -maxdepth 3 -type d
+
+      - name: Install Salesforce CLI
+        run: |
+          npm install @salesforce/cli --global
+
+      - name: Verify Salesforce CLI
+        run: |
+          sf --version
+
+      # DEV
+      - name: Authenticate DEV Org
+        if: github.ref_name == 'NikhilDev'
+        run: |
+          echo "${{ secrets.NIKHILDEV }}" > authfile
+          sf org login sfdx-url --sfdx-url-file authfile --alias targetOrg
+
+      # QAT
+      - name: Authenticate QAT Org
+        if: github.ref_name == 'NikhilQAT'
+        run: |
+          echo "${{ secrets.NIKHILQAT }}" > authfile
+          sf org login sfdx-url --sfdx-url-file authfile --alias targetOrg
+
+      # UAT
+      - name: Authenticate UAT Org
+        if: github.ref_name == 'NikhilUAT'
+        run: |
+          echo "${{ secrets.NIKHILUAT }}" > authfile
+          sf org login sfdx-url --sfdx-url-file authfile --alias targetOrg
+
+      # PROD
+      - name: Authenticate PROD Org
+        if: github.ref_name == 'main'
+        run: |
+          echo "${{ secrets.NIKHILPROD }}" > authfile
+          sf org login sfdx-url --sfdx-url-file authfile --alias targetOrg
+
+      #####################################################
+      # VALIDATION
+      #####################################################
+
+      - name: Validate Deployment
+        run: |
+          sf project deploy validate \
+            --target-org targetOrg \
+            --manifest manifest/package.xml \
+            --wait 30
+
+      #####################################################
+      # DEPLOYMENT
+      #####################################################
+
+      - name: Deploy to Target Org
+        run: |
+          sf project deploy start \
+            --target-org targetOrg \
+            --manifest manifest/package.xml \
+            --wait 30
