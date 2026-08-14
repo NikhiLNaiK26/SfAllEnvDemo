@@ -73,7 +73,7 @@ jobs:
         run: |
           sf project deploy validate \
             --target-org targetOrg \
-            --manifest manifest/package.xml \
+            --source-dir force-app \
             --wait 30
 
       #####################################################
@@ -84,5 +84,5 @@ jobs:
         run: |
           sf project deploy start \
             --target-org targetOrg \
-            --manifest manifest/package.xml \
+            --source-dir force-app \
             --wait 30
