@@ -8,6 +8,13 @@
         <value>B</value>
     </labels>
     <labels>
+        <fullName>test_C</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>test C</shortDescription>
+        <value>c</value>
+    </labels>
+    <labels>
         <fullName>test_Custom_Label_A</fullName>
         <language>en_US</language>
         <protected>false</protected>
