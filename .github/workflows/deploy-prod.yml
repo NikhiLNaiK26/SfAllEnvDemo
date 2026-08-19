@@ -1,0 +1,32 @@
+name: Production Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-prod:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Install Salesforce CLI
+        run: |
+          npm install @salesforce/cli --global
+
+      - name: Verify Salesforce CLI
+        run: |
+          sf --version
+
+      - name: Authenticate PROD Org
+        run: |
+          echo "${{ secrets.NIKHILPROD }}" > authfile
+          sf org login sfdx-url --sfdx-url-file authfile --alias prod
+
+      - name: Deploy to Production
+        run: |
+          sf project deploy start \
+            --target-org prod \
+            --source-dir force-app \
+            --wait 30
