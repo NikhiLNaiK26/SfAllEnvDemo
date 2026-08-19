@@ -35,4 +35,11 @@
         <shortDescription>test D</shortDescription>
         <value>D</value>
     </labels>
+    <labels>
+        <fullName>test_F</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>test F</shortDescription>
+        <value>F</value>
+    </labels>
 </CustomLabels>
