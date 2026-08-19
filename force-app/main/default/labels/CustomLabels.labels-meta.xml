@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>GIT_HUB_DEMO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GIT HUB DEMO</shortDescription>
+        <value>G</value>
+    </labels>
+    <labels>
         <fullName>Test_E</fullName>
         <language>en_US</language>
         <protected>false</protected>
